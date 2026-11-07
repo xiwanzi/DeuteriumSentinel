@@ -39,6 +39,11 @@ sentinel defaults:
     speed: 1.5
     # Whether to automatically switch to the most appropriate available weapon. (Bow at range, or sword up close).
     autoswitch: false
+    # Native TaCZ movement policies; saved NPC values retain their existing persist keys.
+    tacz relocate for shot: true
+    tacz move while shooting: true
+    tacz sprint while moving: false
+    tacz jump while moving: false
     # Accuracy offset, 0 means perfectly accurate, 5 means pretty inaccurate.
     accuracy: 0
     # "Realistic" logic, don't attack targets we can't see, if enabled.
@@ -122,3 +127,14 @@ random:
 
 # How fast to recalculate, in ticks.
 update rate: 10
+
+# Optional native TaCZ support on Youer 1.21.1. Restart after changing enabled.
+tacz:
+    enabled: true
+    always aim: true
+    safe shot radius: 0.35
+    session timeout ticks: 25
+    firing position search interval ticks: 20
+    jump interval ticks: 10
+    # Temporary NPC ammo ability; does not switch the NPC's full game mode.
+    infinite ammo follows sentinel: true

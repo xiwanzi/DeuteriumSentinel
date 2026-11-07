@@ -1,6 +1,9 @@
 Sentinel NPCs: Combat NPCs for Spigot!
 --------------------------------------
 
+Native TaCZ 1.2.0 support for Citizens player NPCs on Youer is documented in
+[the TaCZ integration guide](docs/TACZ.md). It is optional and does not replace normal Sentinel weapon handling.
+
 ### Table Of Contents
 * [Downloads](#downloads)
 * [Donations](#donations)

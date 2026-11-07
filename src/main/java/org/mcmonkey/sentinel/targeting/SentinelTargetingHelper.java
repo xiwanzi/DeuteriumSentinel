@@ -346,7 +346,8 @@ public class SentinelTargetingHelper extends SentinelHelperObject {
      */
     public static Location findSpotForRunDirection(Location start, double distance, Vector direction) {
         VectorGoal goal = new VectorGoal(start.clone().add(direction.clone().multiply(distance)), 4);
-        VectorNode startNode = new VectorNode(goal, start, new ChunkBlockSource(start, (float)distance + 10), parameters);
+        VectorNode startNode = org.mcmonkey.sentinel.utilities.CitizensPathNode.create(goal, start,
+                new ChunkBlockSource(start, (float)distance + 10), parameters, new MinecraftBlockExaminer());
         Path resultPath = (Path) ASTAR.runFully(goal, startNode, (int)(distance * 50));
         if (resultPath == null || resultPath.isComplete()) {
             return null;

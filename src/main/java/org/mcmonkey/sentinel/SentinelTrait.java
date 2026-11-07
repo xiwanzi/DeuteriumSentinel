@@ -544,6 +544,22 @@ public class SentinelTrait extends Trait {
     @Persist("realistic")
     public boolean realistic = false;
 
+    /** Whether a TaCZ NPC searches for a nearby position with a clear firing line. */
+    @Persist("tacz_relocate_for_shot")
+    public boolean taczRelocateForShot = true;
+
+    /** Whether a TaCZ NPC may keep navigating while it fires. */
+    @Persist("tacz_move_while_shooting")
+    public boolean taczMoveWhileShooting = true;
+
+    /** Whether a navigating TaCZ NPC should sprint when it is able to. */
+    @Persist("tacz_sprint_while_moving")
+    public boolean taczSprintWhileMoving = false;
+
+    /** Whether a navigating TaCZ NPC may periodically jump. */
+    @Persist("tacz_jump_while_moving")
+    public boolean taczJumpWhileMoving = false;
+
     /**
      * Whether this NPC should ignore Line of Sight requirement. If set true, the NPC can see targets through walls.
      */
@@ -1107,6 +1123,10 @@ public class SentinelTrait extends Trait {
             speed = 1;
         }
         autoswitch = config.getBoolean("sentinel defaults.autoswitch", false);
+        taczRelocateForShot = config.getBoolean("sentinel defaults.tacz relocate for shot", true);
+        taczMoveWhileShooting = config.getBoolean("sentinel defaults.tacz move while shooting", true);
+        taczSprintWhileMoving = config.getBoolean("sentinel defaults.tacz sprint while moving", false);
+        taczJumpWhileMoving = config.getBoolean("sentinel defaults.tacz jump while moving", false);
         allIgnores.targets.add(SentinelTarget.OWNER.name());
         allIgnores.recalculateTargetsCache();
         reach = config.getDouble("sentinel defaults.reach", 3);

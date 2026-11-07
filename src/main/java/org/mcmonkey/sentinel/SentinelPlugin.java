@@ -216,6 +216,9 @@ public class SentinelPlugin extends JavaPlugin {
      */
     public boolean allowArmorStandTargets;
 
+    /** Optional native gun integration; absent on servers without TaCZ. */
+    public SentinelTaCZ taczIntegration;
+
     /**
      * Fills the {@code vaultPerms} object if possible.
      */
@@ -304,6 +307,9 @@ public class SentinelPlugin extends JavaPlugin {
         tickRate = getConfig().getInt("update rate", 10);
         autoCorrectpathfinderMode = getConfig().getBoolean("random.auto correct pathfinder mode", true);
         allowArmorStandTargets = getConfig().getBoolean("random.allow armor stand targets", false);
+        if (taczIntegration != null) {
+            taczIntegration.reloadSettings();
+        }
     }
 
     /**
@@ -384,6 +390,20 @@ public class SentinelPlugin extends JavaPlugin {
         registerIntegration(new SentinelSBTeams());
         registerIntegration(new SentinelSquads());
         registerIntegration(new SentinelUUID());
+        if (getConfig().getBoolean("tacz.enabled", true)) {
+            try {
+                taczIntegration = SentinelTaCZ.create(this);
+                if (taczIntegration != null) {
+                    registerIntegration(taczIntegration);
+                    taczIntegration.enable();
+                    getLogger().info("TaCZ native NPC gun integration enabled.");
+                }
+            }
+            catch (ReflectiveOperationException | LinkageError | RuntimeException ex) {
+                getLogger().severe("TaCZ is installed but its NPC gun API could not be bound.");
+                ex.printStackTrace();
+            }
+        }
         if (Bukkit.getPluginManager().getPlugin("Towny") != null) {
             try {
                 registerIntegration(new SentinelTowny());
@@ -479,6 +499,10 @@ public class SentinelPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Sentinel unloading...");
+        if (taczIntegration != null) {
+            taczIntegration.shutdown();
+            taczIntegration = null;
+        }
         getLogger().info("Sentinel unloaded!");
     }
 

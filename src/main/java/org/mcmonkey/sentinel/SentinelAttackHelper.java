@@ -211,6 +211,10 @@ public class SentinelAttackHelper extends SentinelHelperObject {
             return false;
         }
         if (!getLivingEntity().hasLineOfSight(entity)) {
+            if (SentinelPlugin.instance.taczIntegration != null
+                    && SentinelPlugin.instance.taczIntegration.handleObstructedShot(sentinel, entity)) {
+                return false;
+            }
             if (sentinel.ignoreLOS || SentinelUtilities.checkLineOfSightWithTransparency(getLivingEntity(), entity)) {
                 if (itemHelper.isRanged() ? sentinel.rangedChase : sentinel.closeChase) {
                     chase(entity);
